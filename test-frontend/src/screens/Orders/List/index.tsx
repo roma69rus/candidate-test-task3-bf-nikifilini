@@ -28,11 +28,11 @@ const OrdersList = observer(
               <div className={styles.table}>
                 <div className={styles.head}> 
                   <div className={styles.row}>
-                    <div>Номер</div>
+                    {/* <div>Номер</div>
                     <div>Создан</div>
                     <div>Доставка</div>
                     <div>В работе</div>
-                    <div>Статус</div>
+                    <div>Статус</div> */}
                   </div>
                 </div>
                 <div className={styles.body}>

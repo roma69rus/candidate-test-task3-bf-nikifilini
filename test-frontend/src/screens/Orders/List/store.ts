@@ -36,6 +36,7 @@ export default class OrdersListState {
   setPage(page: number): void {
     this.page = page;
     const url = new URL(window.location.href);
+    console.log("page",page)
     if (url.searchParams.get("page") !== this.page.toString()) {
       url.searchParams.set("page", "" + this.page);
       this.history.replace(url.pathname + url.search, {});
@@ -69,11 +70,24 @@ export default class OrdersListState {
   }
 
   async loadOrders() {
-    this.loading = true;
-    this.loading = false;
+    this.startLoading()
+
+    const url = new URL(window.location.href);
+    if (Number(url.searchParams.get("page"))>0){
+      this.setPage(Number(url.searchParams.get("page")))
+    }
+
+    const resp = await client.query(GET_ORDERS_QUERY, {page: this.page}).toPromise()
+    console.log("loadOrders: ", resp)
+    this.setOrders(resp.data.getOrders.orders)
+    this.setTotalPages(resp.data.getOrders.pagination.totalPageCount)
+
+    this.stopLoading()
   }
 
   initialize() {
+    
+    // 
     if (this.initialized) return;
     this.initialized = true;
     this.loadOrders();

@@ -16,20 +16,20 @@ export class GlobalState {
     deliveryTypes: CrmType[];
     productStatuses: CrmType[];
   } = {
-    orderStatuses: [],
-    deliveryTypes: [],
-    productStatuses: [],
-  };
+      orderStatuses: [],
+      deliveryTypes: [],
+      productStatuses: [],
+    };
 
   status: {
     orderStatuses: Status;
     deliveryTypes: Status;
     productStatuses: Status;
   } = {
-    orderStatuses: null,
-    deliveryTypes: null,
-    productStatuses: null,
-  };
+      orderStatuses: null,
+      deliveryTypes: null,
+      productStatuses: null,
+    };
 
   constructor() {
     makeAutoObservable(this);
@@ -37,8 +37,12 @@ export class GlobalState {
 
   get orderStatuses() {
     if (this.status.orderStatuses === null) {
-      
+      (async () => {
+        const result = await client.query(ORDER_STATUSES_QUERY).toPromise()  
+        this.setOrderStatuses(result.data.orderStatuses);
+      })();
     }
+    console.log("orderStatuses", JSON.parse(JSON.stringify(this.data.orderStatuses)))
     return this.data.orderStatuses;
   }
 
@@ -60,12 +64,20 @@ export class GlobalState {
 
   get productStatuses() {
     if (this.status.productStatuses === null) {
+      (async () => {
+        const result = await client.query(PRODUCT_STATUSES_QUERY).toPromise()
+        this.setOrderStatuses(result.data.productStatuses);
+      })();
     }
     return this.data.productStatuses;
   }
 
   get deliveryTypes() {
     if (this.status.deliveryTypes === null) {
+      (async () => {
+        const result = await client.query(DELIVERY_TYPES_QUERY).toPromise()  
+        this.setOrderStatuses(result.data.deliveryTypes);
+      })();
     }
     return this.data.deliveryTypes;
   }

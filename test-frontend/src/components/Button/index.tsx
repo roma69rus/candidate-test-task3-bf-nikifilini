@@ -44,8 +44,8 @@ function Button({
       onClick={onClick}
     >
       {icon && <Icon />}
-      {text && <span>{text}</span>}
       {rightIcon && <Icon />}
+      {text && <span>{text}</span>}
     </button>
   )
 }
