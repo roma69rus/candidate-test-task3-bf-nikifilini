@@ -33,22 +33,22 @@ export default class OrdersShowStore {
 
   async getOrder() {
     this.startLoading()
-    if (this.order === null) {
-      const url = window.location.pathname;
-      var id:string = url.substring(url.lastIndexOf('/') + 1);
 
-      console.log("id",id)
+    const url = window.location.pathname;
+    var id: string = url.substring(url.lastIndexOf('/') + 1);
 
-      const response = await client.query(ORDER_QUERY, {id}).toPromise()
-      console.log("response", response.data)
-      this.setOrder(response.data.order);
-    }
+    console.log("id", id)
+
+    const response = await client.query(ORDER_QUERY, { id }).toPromise()
+    console.log("response", response.data)
+    this.setOrder(response.data.order);
+
     this.stopLoading()
     return this.order;
   }
 
   initialize() {
-    
+
     // 
     if (this.initialized) return;
     this.initialized = true;
